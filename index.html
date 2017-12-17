@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <title>D3 Lab 2</title>
+    <script src="d3.js"></script>
+    <style>
+        svg {
+            border: solid 1px #000;
+        }
+        #container {
+            text-align: center
+        }
+    </style>
+</header>
+
+
+<body>
+
+    <svg id="chart"/>
+
+</body>
+
+
+
+<script>
+
+    const WIDTH = 1200;
+    const HEIGHT = 1300;
+
+    const MARGIN = {top:110, left:110, bottom:10, right:10};
+
+    const CHART_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
+    const CHART_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
+
+
+    function sortedYears(restaurants)
+    {
+        let yearsSet = new Set();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+            for(let counterTwo = 0;counterTwo<restaurants[counter].quarters.length;counterTwo++)
+            {
+
+                yearsSet.add(restaurants[counter].quarters[counterTwo].quarter)
+
+            }
+
+
+
+        }
+        //console.log(yearsSet);
+
+        let yearsArray = Array.from(yearsSet);
+
+        yearsArray.sort(function(yearOne, yearTwo){
+
+            let dateOne = new Date(yearOne);
+            let dateTwo = new Date(yearTwo);
+            return dateOne.getTime() - dateTwo.getTime();
+
+
+        })
+
+        console.log(yearsArray)
+
+        return yearsArray
+
+
+    }
+
+    function restaurantNames(restaurants)
+    {
+
+
+
+    }
+
+    function drawChart(id, restaurants)
+    {
+
+        let container = d3.select(id);
+        let color = d3.scaleOrdinal(d3.schemeCategory20);
+
+
+        let xScale = d3.scaleBand()
+            .range([0,CHART_WIDTH])
+            .domain(restaurants.nodes.map(d => d.business_name))
+
+        let yScale = d3.scaleBand()
+            .range([0,CHART_HEIGHT])
+            .domain(sortedYears(restaurants))
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("text")
+            .data()
+
+
+
+    }
+
+
+
+
+    function loadData()
+    {
+        d3.json("restaurants.json", (err,restaurants) => {
+
+            //drawChart("#chart",restaurants)
+
+
+            console.log(restaurants.nodes.map(d=>d.business-name))
+
+
+
+        });
+
+
+    }
+
+
+
+    function main()
+    {
+        d3.select("#chart")
+            .attr("width",WIDTH)
+            .attr("height",HEIGHT)
+        loadData();
+
+
+    }
+
+    main();
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
