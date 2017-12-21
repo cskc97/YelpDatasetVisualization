@@ -16,7 +16,8 @@
 
 
 <body>
-
+    <h1 style="text-align: center">Restaurants And Their Rating Over Time</h1>
+    <h2 style="text-align: center">Matrix Visualization Representation </h2>
     <svg id="chart"/>
 
 </body>
@@ -25,8 +26,8 @@
 
 <script>
 
-    const WIDTH = 1850;
-    const HEIGHT = 1200;
+    const WIDTH = 2300;
+    const HEIGHT = 1500;
 
     const MARGIN = {top:300, left:110, bottom:10, right:10};
 
@@ -40,6 +41,8 @@
     function reformatData(restaurants)
     {
         let returnArray = new Array();
+        let sumRating = 0;
+        let numRecords = 0;
         for(let counter=0;counter<restaurants.length;counter++)
         {
 
@@ -53,13 +56,16 @@
                 addArray.push(quarterArray[counterTwo].quarter);
                 addArray.push(quarterArray[counterTwo].rating);
                 returnArray.push(addArray);
+
+                sumRating += +quarterArray[counterTwo].rating;
+                numRecords++;
             }
 
 
         }
 
         console.log(returnArray);
-        return returnArray;
+        return [returnArray,sumRating/numRecords];
 
     }
 
@@ -132,14 +138,15 @@
     function drawChart(id, restaurants)
     {
         console.log(restaurants);
-        let reformattedRestaurants = reformatData(restaurants);
+        let [reformattedRestaurants,averageRating] = reformatData(restaurants);
+        console.log("AVERAGE RATING - ",averageRating)
 
-        
+
         let container = d3.select(id);
         let color = d3.scaleOrdinal(d3.schemeCategory10);
         let colorScale = d3.scaleLinear()
-            .range(["red","yellow","blue"])
-            .domain([1,2.5,5]);
+            .range(["red","yellow","navy"])
+            .domain([1,averageRating,5]);
 
 
         let [categoryNames, categoryValues] = sortByCategories(restaurants);
@@ -177,6 +184,7 @@
 
 
 
+
         container.append("g")
             .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
             .selectAll("line")
@@ -195,8 +203,8 @@
             .data(reformattedRestaurants)
             .enter()
             .append("line")
-            .attr("y1", d=>xScale(d[BUSINESS_NAME_INDEX]))
-            .attr("y2",d => xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("y1", d=>yScale(d[YEAR_QUARTER_INDEX]))
+            .attr("y2",d => yScale(d[YEAR_QUARTER_INDEX]))
             .attr("x1",0)
             .attr("x2",CHART_WIDTH)
             .attr("stroke","#ccc")
