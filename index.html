@@ -203,9 +203,20 @@
             .attr("y2",CHART_HEIGHT)
             .attr("stroke",(d,index) => {
 
-                if(d[BUSINESS_NAME_INDEX]=="Hakkasan Nightclub")
+
+                for(let counter=0;counter<businessNames.length;counter++)
+
+                if(d[BUSINESS_NAME_INDEX]==businessNames[counter])
                 {
-                    return color(0)
+                    if(counter>=97 && counter<100)
+                    {
+                        return "navy";
+                    }
+
+                    let indexValue = scaledSizes.findIndex(function(element){
+                        return element>=counter+1;
+                    });
+                    return color(indexValue);
                 }
 
                 return "#ccc"
