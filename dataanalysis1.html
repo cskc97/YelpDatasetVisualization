@@ -114,32 +114,44 @@
             let name = restaurants[counter].business_name;
             let quarterArray = restaurants[counter].quarters;
 
-            for(let counterTwo = 0;counterTwo<quarterArray.length;counterTwo++)
+            let numPositive = 0;
+            let numNegative = 0;
+
+            for(let counterTwo = 0; counterTwo<quarterArray.length;counterTwo++)
             {
-
-                let addArray = new Array();
-
-                if(quarterArray[counterTwo].rating>4.5 || quarterArray[counterTwo].rating<2.5)
+                if(quarterArray[counterTwo].rating>4.0)
                 {
+                    numPositive ++;
+                }
+                if(quarterArray[counterTwo].rating<2.8)
+                {
+                    numNegative ++;
+                }
+
+            }
+
+
+
+            if(numPositive/quarterArray.length > 0.6 || numNegative/quarterArray.length>0.4) {
+
+                for (let counterTwo = 0; counterTwo < quarterArray.length; counterTwo++) {
+
+                    let addArray = new Array();
+
 
                     addArray.push(name);
                     addArray.push(quarterArray[counterTwo].quarter);
 
                     addArray.push(quarterArray[counterTwo].rating);
 
-                }
-                else
-                {
-                    addArray.push(name);
-                    addArray.push(quarterArray[counterTwo].quarter);
+                    returnArray.push(addArray);
 
-                    addArray.push(-1);
+                    sumRating += +quarterArray[counterTwo].rating;
+                    numRecords++;
                 }
-                returnArray.push(addArray);
-
-                sumRating += +quarterArray[counterTwo].rating;
-                numRecords++;
             }
+
+
 
 
         }
@@ -486,11 +498,12 @@
             })
 
 
-
+        let plotThis = reformatData2(restaurants)[0]
+        console.log("Plotting", plotThis)
         container.append("g")
             .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
             .selectAll("rect")
-            .data(reformattedRestaurants)
+            .data(plotThis)
             .enter()
             .append("rect")
             .attr("x", (d) => {
@@ -502,8 +515,6 @@
             .attr("width", d=>xScale.bandwidth())
             .attr("height", d=>yScale.bandwidth())
             .attr("fill",d=>{
-
-
 
                 return colorScale(d[QUARTER_RATING_INDEX])
             });
