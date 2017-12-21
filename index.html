@@ -324,6 +324,7 @@
             .attr("dx", d=>xScale(d))
             .attr("font-size",17)
             .attr("text-anchor", "start")
+            .attr("font-weight","bold")
             .attr("alignment-baseline","hanging")
             .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
             .attr("fill", (d,index) => {
@@ -340,6 +341,19 @@
 
 
             })
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left-100}, ${MARGIN.top})`)
+            .append("text")
+            .text("Restaurant Names")
+            .attr("transform","rotate(-90)")
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left-100}, ${MARGIN.top-200})`)
+            .append("text")
+            .text("Categories and restaurant count")
+            .attr("transform","rotate(-90)")
 
 
         container.append("g")
