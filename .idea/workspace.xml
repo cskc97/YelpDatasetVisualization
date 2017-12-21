@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3bbdb3af-fc7f-4d47-849f-d826fd09d439" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataanalysis2.html" afterPath="$PROJECT_DIR$/dataanalysis2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,11 +20,12 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="103" column="0" lean-forward="true" selection-start-line="73" selection-start-column="3" selection-end-line="103" selection-end-column="0" />
+            <state relative-caret-position="486">
+              <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h4#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,8 +47,8 @@
       <file leaf-file-name="dataanalysis2.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dataanalysis2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="10" column="7" lean-forward="false" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            <state relative-caret-position="270">
+              <caret line="129" column="140" lean-forward="false" selection-start-line="129" selection-start-column="140" selection-end-line="129" selection-end-column="140" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -91,8 +93,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/dataanalysis1.html" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/dataanalysis2.html" />
       </list>
     </option>
@@ -196,12 +198,12 @@
       <option name="presentableId" value="Default" />
       <updated>1513538396633</updated>
       <workItem from="1513538398082" duration="6045000" />
-      <workItem from="1513820814221" duration="26209000" />
+      <workItem from="1513820814221" duration="26716000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32254000" />
+    <option name="totallyTimeSpent" value="32761000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="25" width="1922" height="1055" extended-state="6" />
@@ -243,6 +245,7 @@
           <folding>
             <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -287,17 +290,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="103" column="0" lean-forward="true" selection-start-line="73" selection-start-column="3" selection-end-line="103" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataanalysis1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -309,10 +301,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+          <folding>
+            <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dataanalysis2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="7" lean-forward="false" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        <state relative-caret-position="270">
+          <caret line="129" column="140" lean-forward="false" selection-start-line="129" selection-start-column="140" selection-end-line="129" selection-end-column="140" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
