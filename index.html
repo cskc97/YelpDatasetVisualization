@@ -6,6 +6,7 @@
     <style>
         svg {
             border: solid 1px #000;
+            alignment: center;
         }
         #container {
             text-align: center
@@ -24,13 +25,43 @@
 
 <script>
 
-    const WIDTH = 1200;
-    const HEIGHT = 1300;
+    const WIDTH = 1850;
+    const HEIGHT = 1200;
 
-    const MARGIN = {top:110, left:110, bottom:10, right:10};
+    const MARGIN = {top:300, left:110, bottom:10, right:10};
 
     const CHART_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
     const CHART_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
+
+    const BUSINESS_NAME_INDEX = 0;
+    const YEAR_QUARTER_INDEX=1;
+    const QUARTER_RATING_INDEX = 2;
+
+    function reformatData(restaurants)
+    {
+        let returnArray = new Array();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+
+            let name = restaurants[counter].business_name;
+            let quarterArray = restaurants[counter].quarters;
+
+            for(let counterTwo = 0;counterTwo<quarterArray.length;counterTwo++)
+            {
+                let addArray = new Array();
+                addArray.push(name);
+                addArray.push(quarterArray[counterTwo].quarter);
+                addArray.push(quarterArray[counterTwo].rating);
+                returnArray.push(addArray);
+            }
+
+
+        }
+
+        console.log(returnArray);
+        return returnArray;
+
+    }
 
 
     function sortedYears(restaurants)
@@ -68,32 +99,169 @@
 
     }
 
-    function restaurantNames(restaurants)
+    function sortByCategories(restaurants)
     {
 
 
+        console.log(restaurants)
+        let categories = new Map();
+        let returnSet = new Set();
 
+        let categoryList = new Array();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+            returnSet.add(restaurants[counter].category);
+            categories[restaurants[counter].category] = new Array();
+
+
+
+        }
+
+
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+
+            categories[restaurants[counter].category].push(restaurants[counter]["business_name"])
+
+
+        }
+
+        return [Array.from(returnSet).sort(),categories];
     }
 
     function drawChart(id, restaurants)
     {
+        console.log(restaurants);
+        let reformattedRestaurants = reformatData(restaurants);
 
+        
         let container = d3.select(id);
-        let color = d3.scaleOrdinal(d3.schemeCategory20);
+        let color = d3.scaleOrdinal(d3.schemeCategory10);
+        let colorScale = d3.scaleLinear()
+            .range(["red","yellow","blue"])
+            .domain([1,2.5,5]);
 
+
+        let [categoryNames, categoryValues] = sortByCategories(restaurants);
+
+        let businessNames = []
+        let sizes = []
+        for(let category of categoryNames)
+        {
+            businessNames = businessNames.concat(categoryValues[category]);
+            sizes.push(categoryValues[category].length);
+        }
+
+        console.log(categoryValues);
+        console.log(businessNames);
+        console.log(categoryNames);
+        console.log(sizes);
+
+        let scaledSizes = new Array()
+        scaledSizes.push(sizes[0]);
+        for(let counter=1;counter<sizes.length;counter++)
+        {
+            scaledSizes.push(scaledSizes[counter-1]+sizes[counter]);
+        }
+        console.log(scaledSizes);
 
         let xScale = d3.scaleBand()
             .range([0,CHART_WIDTH])
-            .domain(restaurants.nodes.map(d => d.business_name))
+            .domain(businessNames);
+
+
 
         let yScale = d3.scaleBand()
             .range([0,CHART_HEIGHT])
             .domain(sortedYears(restaurants))
 
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("line")
+            .data(reformattedRestaurants)
+            .enter()
+            .append("line")
+            .attr("x1", d=>xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("x2",d => xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("y1",0)
+            .attr("y2",CHART_HEIGHT)
+            .attr("stroke","#ccc")
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("line")
+            .data(reformattedRestaurants)
+            .enter()
+            .append("line")
+            .attr("y1", d=>xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("y2",d => xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("x1",0)
+            .attr("x2",CHART_WIDTH)
+            .attr("stroke","#ccc")
+
+
+
         container.append("g")
             .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
             .selectAll("text")
-            .data()
+            .data(sortedYears(restaurants))
+            .enter()
+            .append('text')
+            .text(d => {
+            return d;})
+            .attr("dy", d=>yScale(d))
+            .attr("alignment-baseline","hanging")
+            .attr("text-anchor", "end");
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("text")
+            .data(businessNames)
+            .enter()
+            .append('text')
+            .text(d => d)
+            .attr("dx", d=>xScale(d))
+            .attr("text-anchor", "start")
+            .attr("alignment-baseline","hanging")
+            .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
+            .attr("fill", (d,index) => {
+
+                if(index>=97 && index<100)
+                {
+                    return "navy";
+                }
+
+                let indexValue = scaledSizes.findIndex(function(element){
+                    return element>=index+1;
+                });
+                return color(indexValue);
+
+
+            })
+
+
+        container.append("g")
+            .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
+            .selectAll("rect")
+            .data(reformattedRestaurants)
+            .enter()
+            .append("rect")
+            .attr("x", (d) => {
+                    return xScale(d[BUSINESS_NAME_INDEX]);
+            })
+            .attr("y",(d)=>{
+                return yScale(d[YEAR_QUARTER_INDEX]);
+            })
+            .attr("width", d=>xScale.bandwidth())
+            .attr("height", d=>yScale.bandwidth())
+            .attr("fill",d=>{
+
+
+
+                return colorScale(d[QUARTER_RATING_INDEX])
+            });
 
 
 
@@ -106,10 +274,10 @@
     {
         d3.json("restaurants.json", (err,restaurants) => {
 
-            //drawChart("#chart",restaurants)
+
+            drawChart("#chart",restaurants)
 
 
-            console.log(restaurants.nodes.map(d=>d.business-name))
 
 
 
