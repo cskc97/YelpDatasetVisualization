@@ -19,7 +19,20 @@
     <h1 style="text-align: center">Restaurants And Their Rating Over Time</h1>
     <h2 style="text-align: center">Matrix Visualization Representation </h2>
 
-    <svg id="chart"/>
+    <svg id="chart">
+        <defs>
+            <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="red"/>
+                <stop offset="50%" stop-color="yellow"/>
+                <stop offset="100%" stop-color="navy"/>
+            </linearGradient>
+
+        </defs>
+
+
+
+    </svg>
+
 
 </body>
 
@@ -195,6 +208,18 @@
             .append("text")
             .text("Restaurant Names")
             .attr("font-size",30)
+
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-300})`)
+            .append("rect")
+            .attr("x1",0)
+            .attr("y1",0)
+            .attr("width",25)
+            .attr("height",200)
+            .attr("fill","url(#Gradient2")
+
+            .attr("transform", d=>`rotate(-90)`);
 
 
 
