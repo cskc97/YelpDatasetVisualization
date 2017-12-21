@@ -43,7 +43,7 @@
     const WIDTH = 2300;
     const HEIGHT = 1500;
 
-    const MARGIN = {top:350, left:150, bottom:10, right:10};
+    const MARGIN = {top:450, left:150, bottom:10, right:10};
 
     const CHART_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
     const CHART_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
@@ -204,22 +204,44 @@
             .attr("transform", d=>`rotate(-90)`);
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2}, ${MARGIN.top-320})`)
+            .attr("transform", `translate(${WIDTH/2-200}, ${MARGIN.top-400})`)
             .append("text")
-            .text("Restaurant Names")
+            .text("Restaurant Names And Categories")
             .attr("font-size",30)
 
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-300})`)
+            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-400})`)
             .append("rect")
             .attr("x1",0)
             .attr("y1",0)
             .attr("width",25)
-            .attr("height",200)
+            .attr("height",250)
             .attr("fill","url(#Gradient2")
 
             .attr("transform", d=>`rotate(-90)`);
+
+
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 525}, ${MARGIN.top-400})`)
+            .append("text")
+            .text("Legend")
+            .attr("font-size",18)
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 600}, ${MARGIN.top-380})`)
+            .append("text")
+            .text("Negative")
+            .attr("font-size",13)
+            .attr("fill","red")
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 800}, ${MARGIN.top-380})`)
+            .append("text")
+            .text("Positive")
+            .attr("font-size",13)
+            .attr("fill","navy")
 
 
 
@@ -231,29 +253,14 @@
             .append("line")
             .attr("x1", d=>xScale(d[BUSINESS_NAME_INDEX]))
             .attr("x2",d => xScale(d[BUSINESS_NAME_INDEX]))
-            .attr("y1",0)
+            .attr("y1",-150)
             .attr("y2",CHART_HEIGHT)
             .attr("stroke",(d,index) => {
 
 
-                for(let counter=0;counter<businessNames.length;counter++)
-
-                if(d[BUSINESS_NAME_INDEX]==businessNames[counter])
-                {
-                    if(counter>=97 && counter<100)
-                    {
-                        return "navy";
-                    }
-
-                    let indexValue = scaledSizes.findIndex(function(element){
-                        return element>=counter+1;
-                    });
-                    return color(indexValue);
-                }
-
                 return "#ccc"
-            })
-            .attr("stroke-opacity",0.3)
+            });
+
 
         container.append("g")
             .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
@@ -294,6 +301,35 @@
             .append('text')
             .text(d => d)
             .attr("dx", d=>xScale(d))
+            .attr("font-size",17)
+            .attr("text-anchor", "start")
+            .attr("alignment-baseline","hanging")
+            .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
+            .attr("fill", (d,index) => {
+
+                if(index>=97 && index<100)
+                {
+                    return "navy";
+                }
+
+                let indexValue = scaledSizes.findIndex(function(element){
+                    return element>=index+1;
+                });
+                return color(indexValue);
+
+
+            })
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("text")
+            .data(businessNames)
+            .enter()
+            .append('text')
+            .text(d => d)
+            .attr("dx", d=>xScale(d)+150)
+
             .attr("font-size",17)
             .attr("text-anchor", "start")
             .attr("alignment-baseline","hanging")
