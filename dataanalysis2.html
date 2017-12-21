@@ -374,9 +374,9 @@
             .append('text')
             .text(d => d)
             .attr("dx", d=>xScale(d))
-            .attr("font-size",17)
+            .attr("font-size",18)
             .attr("text-anchor", "start")
-            .attr("font-weight","bold")
+            .attr("font-weight","normal")
             .attr("alignment-baseline","hanging")
             .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
             .attr("fill", (d,index) => {
