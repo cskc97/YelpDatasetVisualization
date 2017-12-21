@@ -184,10 +184,17 @@
             .domain(sortedYears(restaurants))
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2}, ${MARGIN.top-280})`)
+            .attr("transform", `translate(${MARGIN.left-120}, ${MARGIN.top+CHART_HEIGHT/2})`)
+            .append("text")
+            .text("Years (Quarters)")
+            .attr("font-size",30)
+            .attr("transform", d=>`rotate(-90)`);
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2}, ${MARGIN.top-320})`)
             .append("text")
             .text("Restaurant Names")
-            .attr("font-size",20)
+            .attr("font-size",30)
 
 
 
