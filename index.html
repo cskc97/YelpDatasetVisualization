@@ -52,6 +52,25 @@
     const YEAR_QUARTER_INDEX=1;
     const QUARTER_RATING_INDEX = 2;
 
+
+    function restaurantAndCategories(restaurants)
+    {
+
+        let returnMap = new Map();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+            returnMap.set(restaurants[counter].business_name,restaurants[counter].category);
+
+
+        }
+
+        return returnMap;
+
+
+
+
+    }
+
     function reformatData(restaurants)
     {
         let returnArray = new Array();
@@ -155,6 +174,8 @@
         let [reformattedRestaurants,averageRating] = reformatData(restaurants);
         console.log("AVERAGE RATING - ",averageRating)
 
+        let restaurantCategoriesMap = restaurantAndCategories(restaurants);
+        console.log(restaurantCategoriesMap);
 
         let container = d3.select(id);
         let color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -327,11 +348,65 @@
             .data(businessNames)
             .enter()
             .append('text')
-            .text(d => d)
-            .attr("dx", d=>xScale(d)+150)
+            .text((d,index) =>{
+
+            if(index == 34/2)
+            {
+                return "American (Traditional) - 35";
+            }
+            if (index == 36)
+            {
+                return "Chinese - 6"
+            }
+            if(index == 45)
+            {
+                return "French - 10"
+            }
+            if(index == 51)
+            {
+                return "Greek - 1"
+            }
+
+            if(index == 52)
+            {
+                return "Indian - 2"
+            }
+            if(index == 57)
+            {
+                return "Italian - 9"
+            }
+            if(index == 71)
+            {
+                return "Japanese - 17"
+
+            }
+            if(index == 80)
+            {
+                return "Mediterranean - 2"
+            }
+            if(index == 87)
+            {
+                return "Mexican - 12"
+
+            }
+            if(index == 95)
+            {
+                return "Thai - 3"
+            }
+            if(index == 98)
+            {
+                return "Vitenamese - 3"
+            }
+            return "";
+
+           })
+
+            .attr("dx", d=>xScale(d)+200)
 
             .attr("font-size",17)
             .attr("text-anchor", "start")
+            .attr("font-weight",900)
+            .attr("text-decoration","underline")
             .attr("alignment-baseline","hanging")
             .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
             .attr("fill", (d,index) => {
@@ -348,6 +423,7 @@
 
 
             })
+
 
 
         container.append("g")
@@ -384,6 +460,7 @@
 
 
             drawChart("#chart",restaurants)
+            //restaurantAndCategories(restaurants);
 
 
 
