@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <title>D3 Lab 2</title>
+    <script src="d3.js"></script>
+    <style>
+        svg {
+            border: solid 1px #000;
+            alignment: center;
+        }
+        #container {
+            text-align: center
+        }
+    </style>
+</header>
+
+
+<body>
+<h1 style="text-align: center">Restaurants And Their Rating Over Time</h1>
+<h2 style="text-align: center">Matrix Visualization Representation </h2>
+
+<svg id="chart">
+    <defs>
+        <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="50%" stop-color="yellow"/>
+            <stop offset="100%" stop-color="navy"/>
+        </linearGradient>
+
+    </defs>
+
+
+
+</svg>
+
+
+</body>
+
+
+
+<script>
+
+    const WIDTH = 2300;
+    const HEIGHT = 1500;
+
+    const MARGIN = {top:450, left:150, bottom:10, right:10};
+
+    const CHART_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
+    const CHART_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
+
+    const BUSINESS_NAME_INDEX = 0;
+    const YEAR_QUARTER_INDEX=1;
+    const QUARTER_RATING_INDEX = 2;
+
+
+    function restaurantAndCategories(restaurants)
+    {
+
+        let returnMap = new Map();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+            returnMap.set(restaurants[counter].business_name,restaurants[counter].category);
+
+
+        }
+
+        return returnMap;
+
+
+
+
+    }
+
+
+    function reformatData(restaurants)
+    {
+        let returnArray = new Array();
+        let sumRating = 0;
+        let numRecords = 0;
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+
+            let name = restaurants[counter].business_name;
+            let quarterArray = restaurants[counter].quarters;
+
+            for(let counterTwo = 0;counterTwo<quarterArray.length;counterTwo++)
+            {
+                let addArray = new Array();
+                addArray.push(name);
+                addArray.push(quarterArray[counterTwo].quarter);
+                addArray.push(quarterArray[counterTwo].rating);
+                returnArray.push(addArray);
+
+                sumRating += +quarterArray[counterTwo].rating;
+                numRecords++;
+            }
+
+
+        }
+
+        console.log(returnArray);
+        return [returnArray,sumRating/numRecords];
+
+    }
+
+    function reformatData2(restaurants)
+    {
+        let returnArray = new Array();
+        let sumRating = 0;
+        let numRecords = 0;
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+
+            let name = restaurants[counter].business_name;
+            let quarterArray = restaurants[counter].quarters;
+
+            let restaurantRatingSum = 0;
+
+            for(let counterTwo = 0; counterTwo<quarterArray.length;counterTwo++)
+            {
+                restaurantRatingSum += +quarterArray[counterTwo].rating
+
+            }
+            let restaurantAverage = restaurantRatingSum/quarterArray.length;
+
+
+
+
+
+            for (let counterTwo = 0; counterTwo < quarterArray.length; counterTwo++) {
+
+                if (quarterArray[counterTwo].rating > restaurantAverage + 0.75 || quarterArray[counterTwo].rating < restaurantAverage - 0.75) {
+                    let addArray = new Array();
+
+
+                    addArray.push(name);
+                    addArray.push(quarterArray[counterTwo].quarter);
+
+                    addArray.push(quarterArray[counterTwo].rating);
+
+                    returnArray.push(addArray);
+
+                    sumRating += +quarterArray[counterTwo].rating;
+                    numRecords++;
+                }
+            }
+
+
+
+
+
+        }
+
+        console.log(returnArray);
+        return [returnArray,sumRating/numRecords];
+
+    }
+
+
+    function sortedYears(restaurants)
+    {
+        let yearsSet = new Set();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+            for(let counterTwo = 0;counterTwo<restaurants[counter].quarters.length;counterTwo++)
+            {
+
+                yearsSet.add(restaurants[counter].quarters[counterTwo].quarter)
+
+            }
+
+
+
+        }
+        //console.log(yearsSet);
+
+        let yearsArray = Array.from(yearsSet);
+
+        yearsArray.sort(function(yearOne, yearTwo){
+
+            let dateOne = new Date(yearOne);
+            let dateTwo = new Date(yearTwo);
+            return dateOne.getTime() - dateTwo.getTime();
+
+
+        })
+
+        console.log(yearsArray)
+
+        return yearsArray
+
+
+    }
+
+    function sortByCategories(restaurants)
+    {
+
+
+        console.log(restaurants)
+        let categories = new Map();
+        let returnSet = new Set();
+
+        let categoryList = new Array();
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+            returnSet.add(restaurants[counter].category);
+            categories[restaurants[counter].category] = new Array();
+
+
+
+        }
+
+
+        for(let counter=0;counter<restaurants.length;counter++)
+        {
+
+            categories[restaurants[counter].category].push(restaurants[counter]["business_name"])
+
+
+        }
+
+        return [Array.from(returnSet).sort(),categories];
+    }
+
+    function drawChart(id, restaurants)
+    {
+        console.log(restaurants);
+        let [reformattedRestaurants,averageRating] = reformatData(restaurants);
+        console.log("AVERAGE RATING - ",averageRating)
+
+        let restaurantCategoriesMap = restaurantAndCategories(restaurants);
+        console.log(restaurantCategoriesMap);
+
+        let container = d3.select(id);
+        let color = d3.scaleOrdinal(d3.schemeCategory10);
+        let colorScale = d3.scaleLinear()
+            .range(["red","yellow","navy"])
+            .domain([1,averageRating,5]);
+
+
+        let [categoryNames, categoryValues] = sortByCategories(restaurants);
+
+        let businessNames = []
+        let sizes = []
+        for(let category of categoryNames)
+        {
+            businessNames = businessNames.concat(categoryValues[category]);
+            sizes.push(categoryValues[category].length);
+        }
+
+        console.log(categoryValues);
+        console.log(businessNames);
+        console.log(categoryNames);
+        console.log(sizes);
+
+        let scaledSizes = new Array()
+        scaledSizes.push(sizes[0]);
+        for(let counter=1;counter<sizes.length;counter++)
+        {
+            scaledSizes.push(scaledSizes[counter-1]+sizes[counter]);
+        }
+        console.log(scaledSizes);
+
+        let xScale = d3.scaleBand()
+            .range([0,CHART_WIDTH])
+            .domain(businessNames);
+
+
+
+        let yScale = d3.scaleBand()
+            .range([0,CHART_HEIGHT])
+            .domain(sortedYears(restaurants))
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left-120}, ${MARGIN.top+CHART_HEIGHT/2})`)
+            .append("text")
+            .text("Years (Quarters)")
+            .attr("font-size",30)
+            .attr("transform", d=>`rotate(-90)`);
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2-200}, ${MARGIN.top-400})`)
+            .append("text")
+            .text("Restaurant Names And Categories")
+            .attr("font-size",30)
+
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-400})`)
+            .append("rect")
+            .attr("x1",0)
+            .attr("y1",0)
+            .attr("width",25)
+            .attr("height",250)
+            .attr("fill","url(#Gradient2")
+
+            .attr("transform", d=>`rotate(-90)`);
+
+
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 525}, ${MARGIN.top-400})`)
+            .append("text")
+            .text("Legend")
+            .attr("font-size",18)
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 600}, ${MARGIN.top-380})`)
+            .append("text")
+            .text("Negative")
+            .attr("font-size",13)
+            .attr("fill","red")
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 800}, ${MARGIN.top-380})`)
+            .append("text")
+            .text("Positive")
+            .attr("font-size",13)
+            .attr("fill","navy")
+
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("line")
+            .data(reformattedRestaurants)
+            .enter()
+            .append("line")
+            .attr("x1", d=>xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("x2",d => xScale(d[BUSINESS_NAME_INDEX]))
+            .attr("y1",-150)
+            .attr("y2",CHART_HEIGHT)
+            .attr("stroke",(d,index) => {
+
+
+                return "#ccc"
+            });
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("line")
+            .data(reformattedRestaurants)
+            .enter()
+            .append("line")
+            .attr("y1", d=>yScale(d[YEAR_QUARTER_INDEX]))
+            .attr("y2",d => yScale(d[YEAR_QUARTER_INDEX]))
+            .attr("x1",0)
+            .attr("x2",CHART_WIDTH)
+            .attr("stroke",(d, index)=>{
+
+
+                return "#ccc"
+            })
+            .attr("stroke-width",2)
+
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("text")
+            .data(sortedYears(restaurants))
+            .enter()
+            .append('text')
+            .text(d => {
+                return d;})
+            .attr("dy", d=>yScale(d))
+            .attr("alignment-baseline","hanging")
+            .attr("text-anchor", "end");
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("text")
+            .data(businessNames)
+            .enter()
+            .append('text')
+            .text(d => d)
+            .attr("dx", d=>xScale(d))
+            .attr("font-size",17)
+            .attr("text-anchor", "start")
+            .attr("font-weight","bold")
+            .attr("alignment-baseline","hanging")
+            .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
+            .attr("fill", (d,index) => {
+
+                if(index>=97 && index<100)
+                {
+                    return "navy";
+                }
+
+                let indexValue = scaledSizes.findIndex(function(element){
+                    return element>=index+1;
+                });
+                return color(indexValue);
+
+
+            })
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left-100}, ${MARGIN.top})`)
+            .append("text")
+            .text("Restaurant Names")
+            .attr("transform","rotate(-90)")
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left-100}, ${MARGIN.top-200})`)
+            .append("text")
+            .text("Categories and restaurant count")
+            .attr("transform","rotate(-90)")
+
+
+        container.append("g")
+            .attr("transform", `translate(${MARGIN.left}, ${MARGIN.top})`)
+            .selectAll("text")
+            .data(businessNames)
+            .enter()
+            .append('text')
+            .text((d,index) =>{
+
+                if(index == 34/2)
+                {
+                    return "American (Traditional) - 35";
+                }
+                if (index == 36)
+                {
+                    return "Chinese - 6"
+                }
+                if(index == 45)
+                {
+                    return "French - 10"
+                }
+                if(index == 51)
+                {
+                    return "Greek - 1"
+                }
+
+                if(index == 52)
+                {
+                    return "Indian - 2"
+                }
+                if(index == 57)
+                {
+                    return "Italian - 9"
+                }
+                if(index == 71)
+                {
+                    return "Japanese - 17"
+
+                }
+                if(index == 80)
+                {
+                    return "Mediterranean - 2"
+                }
+                if(index == 87)
+                {
+                    return "Mexican - 12"
+
+                }
+                if(index == 95)
+                {
+                    return "Thai - 3"
+                }
+                if(index == 98)
+                {
+                    return "Vitenamese - 3"
+                }
+                return "";
+
+            })
+
+            .attr("dx", d=>xScale(d)+200)
+
+            .attr("font-size",17)
+            .attr("text-anchor", "start")
+            .attr("font-weight",900)
+            .attr("text-decoration","underline")
+            .attr("alignment-baseline","hanging")
+            .attr("transform", d=>`rotate(-90, ${xScale(d)}, ${0})`)
+            .attr("fill", (d,index) => {
+
+                if(index>=97 && index<100)
+                {
+                    return "navy";
+                }
+
+                let indexValue = scaledSizes.findIndex(function(element){
+                    return element>=index+1;
+                });
+                return color(indexValue);
+
+
+            })
+
+
+        let plotThis = reformatData2(restaurants)[0]
+        console.log("Plotting", plotThis)
+        container.append("g")
+            .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
+            .selectAll("rect")
+            .data(plotThis)
+            .enter()
+            .append("rect")
+            .attr("x", (d) => {
+                return xScale(d[BUSINESS_NAME_INDEX]);
+            })
+            .attr("y",(d)=>{
+                return yScale(d[YEAR_QUARTER_INDEX]);
+            })
+            .attr("width", d=>xScale.bandwidth())
+            .attr("height", d=>yScale.bandwidth())
+            .attr("fill",d=>{
+
+                return colorScale(d[QUARTER_RATING_INDEX])
+            });
+
+
+
+    }
+
+
+
+
+    function loadData()
+    {
+        d3.json("restaurants.json", (err,restaurants) => {
+
+
+            drawChart("#chart",restaurants)
+            //restaurantAndCategories(restaurants);
+
+
+
+
+
+        });
+
+
+    }
+
+
+
+    function main()
+    {
+        d3.select("#chart")
+            .attr("width",WIDTH)
+            .attr("height",HEIGHT)
+        loadData();
+
+
+    }
+
+    main();
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
