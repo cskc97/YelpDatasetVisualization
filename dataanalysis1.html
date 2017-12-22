@@ -29,6 +29,15 @@
 
     </defs>
 
+    <defs>
+        <linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="grey"/>
+
+            <stop offset="100%" stop-color="white"/>
+        </linearGradient>
+
+    </defs>
+
 
 
 </svg>
@@ -41,9 +50,9 @@
 <script>
 
     const WIDTH = 2300;
-    const HEIGHT = 1500;
+    const HEIGHT = 1700;
 
-    const MARGIN = {top:450, left:150, bottom:10, right:10};
+    const MARGIN = {top:550, left:150, bottom:10, right:10};
 
     const CHART_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
     const CHART_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
@@ -305,25 +314,6 @@
 
 
 
-        container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 525}, ${MARGIN.top-400})`)
-            .append("text")
-            .text("Legend")
-            .attr("font-size",18)
-
-        container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 600}, ${MARGIN.top-380})`)
-            .append("text")
-            .text("Negative")
-            .attr("font-size",13)
-            .attr("fill","red")
-
-        container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 800}, ${MARGIN.top-380})`)
-            .append("text")
-            .text("Positive")
-            .attr("font-size",13)
-            .attr("fill","navy")
 
 
 
@@ -535,8 +525,9 @@
 
 
 
+
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-400})`)
+            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-450})`)
             .append("rect")
             .attr("x1",0)
             .attr("y1",0)
@@ -549,20 +540,20 @@
 
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 525}, ${MARGIN.top-400})`)
+            .attr("transform", `translate(${WIDTH/2 + 525}, ${MARGIN.top-450})`)
             .append("text")
             .text("Legend")
             .attr("font-size",18)
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 600}, ${MARGIN.top-380})`)
+            .attr("transform", `translate(${WIDTH/2 + 600}, ${MARGIN.top-430})`)
             .append("text")
             .text("Negative")
             .attr("font-size",13)
             .attr("fill","red")
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 800}, ${MARGIN.top-380})`)
+            .attr("transform", `translate(${WIDTH/2 + 800}, ${MARGIN.top-430})`)
             .append("text")
             .text("Positive")
             .attr("font-size",13)
@@ -570,7 +561,7 @@
 
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2+900}, ${MARGIN.top-410})`)
+            .attr("transform", `translate(${WIDTH/2+900}, ${MARGIN.top-460})`)
             .append("circle")
             .attr("cx",0)
             .attr("cy",0)
@@ -581,7 +572,7 @@
 
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2+950}, ${MARGIN.top-410})`)
+            .attr("transform", `translate(${WIDTH/2+950}, ${MARGIN.top-460})`)
             .append("circle")
             .attr("cx",0)
             .attr("cy",0)
@@ -590,7 +581,7 @@
             .attr("fill","yellow");
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2+1000}, ${MARGIN.top-410})`)
+            .attr("transform", `translate(${WIDTH/2+1000}, ${MARGIN.top-460})`)
             .append("circle")
             .attr("cx",0)
             .attr("cy",0)
@@ -599,18 +590,19 @@
             .attr("fill","blue");
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 870}, ${MARGIN.top-370})`)
+            .attr("transform", `translate(${WIDTH/2 + 870}, ${MARGIN.top-420})`)
             .append("text")
             .text("Negative")
             .attr("font-size",13)
             .attr("fill","red")
 
         container.append("g")
-            .attr("transform", `translate(${WIDTH/2 + 1000}, ${MARGIN.top-360})`)
+            .attr("transform", `translate(${WIDTH/2 + 1000}, ${MARGIN.top-410})`)
             .append("text")
             .text("Positive")
             .attr("font-size",13)
             .attr("fill","blue")
+
 
 
         let opacityScale = d3.scaleLinear()
@@ -645,29 +637,36 @@
                 return opacityScale(d[3])
             });
 
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-400})`)
+            .append("rect")
+            .attr("x1",0)
+            .attr("y1",0)
+            .attr("width",25)
+            .attr("height",250)
+            .attr("fill","url(#Gradient3")
+
+            .attr("transform", d=>`rotate(-90)`);
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 600}, ${MARGIN.top-380})`)
+            .append("text")
+            .text("Unreliable")
+            .attr("font-size",13)
+            .attr("fill","black")
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 800}, ${MARGIN.top-380})`)
+            .append("text")
+            .text("Reliable")
+            .attr("font-size",13)
+            .attr("fill","black")
 
 
 
 
 
-//        container.append("g")
-//            .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
-//            .selectAll("rect")
-//            .data(plotThis)
-//            .enter()
-//            .append("rect")
-//            .attr("x", (d) => {
-//                return xScale(d[BUSINESS_NAME_INDEX]);
-//            })
-//            .attr("y",(d)=>{
-//                return yScale(d[YEAR_QUARTER_INDEX]);
-//            })
-//            .attr("width", d=>xScale.bandwidth())
-//            .attr("height", d=>yScale.bandwidth())
-//            .attr("fill",d=>{
-//
-//                return colorScale(d[QUARTER_RATING_INDEX])
-//            });
+
 
 
 

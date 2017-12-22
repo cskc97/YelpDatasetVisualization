@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bbdb3af-fc7f-4d47-849f-d826fd09d439" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reliability.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataanalysis1.html" afterPath="$PROJECT_DIR$/dataanalysis1.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataanalysis2.html" afterPath="$PROJECT_DIR$/dataanalysis2.html" />
     </list>
@@ -33,24 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataanalysis1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataanalysis1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="638" column="31" lean-forward="false" selection-start-line="638" selection-start-column="25" selection-end-line="638" selection-end-column="31" />
-              <folding>
-                <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dataanalysis2.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dataanalysis2.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataanalysis2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="309" column="6" lean-forward="false" selection-start-line="309" selection-start-column="6" selection-end-line="309" selection-end-column="6" />
+            <state relative-caret-position="439">
+              <caret line="591" column="0" lean-forward="true" selection-start-line="591" selection-start-column="0" selection-end-line="591" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -62,12 +47,25 @@
       <file leaf-file-name="reliability.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/reliability.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="431">
-              <caret line="569" column="0" lean-forward="true" selection-start-line="493" selection-start-column="6" selection-end-line="569" selection-end-column="0" />
+            <state relative-caret-position="647">
+              <caret line="634" column="0" lean-forward="true" selection-start-line="609" selection-start-column="6" selection-end-line="634" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h4#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dataanalysis1.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dataanalysis1.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="817">
+              <caret line="664" column="0" lean-forward="true" selection-start-line="664" selection-start-column="0" selection-end-line="664" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,6 +84,7 @@
     <findStrings>
       <find>navy</find>
       <find>Negative</find>
+      <find>Positive</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -96,9 +95,9 @@
       <list>
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/dataanalysis1.html" />
         <option value="$PROJECT_DIR$/reliability.html" />
         <option value="$PROJECT_DIR$/dataanalysis2.html" />
+        <option value="$PROJECT_DIR$/dataanalysis1.html" />
       </list>
     </option>
   </component>
@@ -201,12 +200,12 @@
       <option name="presentableId" value="Default" />
       <updated>1513538396633</updated>
       <workItem from="1513538398082" duration="6045000" />
-      <workItem from="1513820814221" duration="35571000" />
+      <workItem from="1513820814221" duration="35779000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41616000" />
+    <option name="totallyTimeSpent" value="41824000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="25" width="1922" height="1055" extended-state="6" />
@@ -307,10 +306,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataanalysis1.html">
+    <entry file="file://$PROJECT_DIR$/dataanalysis2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="638" column="31" lean-forward="false" selection-start-line="638" selection-start-column="25" selection-end-line="638" selection-end-column="31" />
+        <state relative-caret-position="439">
+          <caret line="591" column="0" lean-forward="true" selection-start-line="591" selection-start-column="0" selection-end-line="591" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -320,8 +319,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/reliability.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="569" column="0" lean-forward="true" selection-start-line="493" selection-start-column="6" selection-end-line="569" selection-end-column="0" />
+        <state relative-caret-position="647">
+          <caret line="634" column="0" lean-forward="true" selection-start-line="609" selection-start-column="6" selection-end-line="634" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -330,10 +329,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataanalysis2.html">
+    <entry file="file://$PROJECT_DIR$/dataanalysis1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="309" column="6" lean-forward="false" selection-start-line="309" selection-start-column="6" selection-end-line="309" selection-end-column="6" />
+        <state relative-caret-position="817">
+          <caret line="664" column="0" lean-forward="true" selection-start-line="664" selection-start-column="0" selection-end-line="664" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
