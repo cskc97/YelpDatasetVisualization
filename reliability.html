@@ -8,7 +8,9 @@
             border: solid 1px #000;
             alignment: center;
         }
-
+        #container {
+            text-align: center
+        }
     </style>
 </header>
 
@@ -16,23 +18,24 @@
 <body>
 <h1 style="text-align: center">Restaurants And Their Rating Over Time</h1>
 <h2 style="text-align: center">Matrix Visualization Representation </h2>
+<h4 style="text-align:center">Santhoshkrisnachaitanya Chelikavada (sc5612)</h4>
 
 <svg id="chart">
     <defs>
         <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stop-color="red"/>
             <stop offset="50%" stop-color="yellow"/>
-            <stop offset="100%" stop-color="navy"/>
+            <stop offset="100%" stop-color="blue"/>
         </linearGradient>
 
-    </defs>
+        <defs>
+            <linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="grey"/>
 
-    <defs>
-        <linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stop-color="grey"/>
+                <stop offset="100%" stop-color="white"/>
+            </linearGradient>
 
-            <stop offset="100%" stop-color="white"/>
-        </linearGradient>
+        </defs>
 
     </defs>
 
@@ -58,7 +61,47 @@
     const BUSINESS_NAME_INDEX = 0;
     const YEAR_QUARTER_INDEX=1;
     const QUARTER_RATING_INDEX = 2;
+    const COUNT_INDEX = 3;
 
+
+    function unreliableData(restaurants)
+    {
+
+        let returnArray = new Array();
+        let minCount = 1;
+        let maxCount = 0;
+        let sumRating = 0;
+        let countRating = 0;
+        for(let i=0;i<restaurants.length;i++)
+        {
+            let quarters = restaurants[i].quarters
+
+            for(let j=0;j<quarters.length;j++)
+            {
+
+                countRating++;
+                sumRating += quarters[j]["count"];
+                if(+quarters[j]["count"] > maxCount)
+                {
+                    maxCount = quarters[j]["count"];
+                }
+                if(+quarters[j]["count"] < minCount)
+                {
+                    minCount = quarters[j]["count"];
+                }
+
+            }
+
+
+
+        }
+
+
+
+        return [[minCount,sumRating/countRating,maxCount]];
+
+
+    }
 
     function restaurantAndCategories(restaurants)
     {
@@ -78,7 +121,6 @@
 
     }
 
-
     function reformatData(restaurants)
     {
         let returnArray = new Array();
@@ -96,66 +138,12 @@
                 addArray.push(name);
                 addArray.push(quarterArray[counterTwo].quarter);
                 addArray.push(quarterArray[counterTwo].rating);
+                addArray.push(quarterArray[counterTwo]["count"])
                 returnArray.push(addArray);
 
                 sumRating += +quarterArray[counterTwo].rating;
                 numRecords++;
             }
-
-
-        }
-
-        console.log(returnArray);
-        return [returnArray,sumRating/numRecords];
-
-    }
-
-    function reformatData2(restaurants)
-    {
-        let returnArray = new Array();
-        let sumRating = 0;
-        let numRecords = 0;
-        for(let counter=0;counter<restaurants.length;counter++)
-        {
-
-            let name = restaurants[counter].business_name;
-            let quarterArray = restaurants[counter].quarters;
-
-            let restaurantRatingSum = 0;
-
-            for(let counterTwo = 0; counterTwo<quarterArray.length;counterTwo++)
-            {
-                restaurantRatingSum += +quarterArray[counterTwo].rating
-
-            }
-            let restaurantAverage = restaurantRatingSum/quarterArray.length;
-
-
-
-
-
-            for (let counterTwo = 0; counterTwo < quarterArray.length; counterTwo++) {
-
-                if (quarterArray[counterTwo].rating > restaurantAverage + 0.75 || quarterArray[counterTwo].rating < restaurantAverage - 0.75) {
-                    let addArray = new Array();
-
-
-                    addArray.push(name);
-                    addArray.push(quarterArray[counterTwo].quarter);
-
-                    addArray.push(quarterArray[counterTwo].rating);
-
-                    addArray.push(quarterArray[counterTwo]["count"]);
-
-                    returnArray.push(addArray);
-
-                    sumRating += +quarterArray[counterTwo].rating;
-                    numRecords++;
-                }
-            }
-
-
-
 
 
         }
@@ -243,8 +231,8 @@
         let container = d3.select(id);
         let color = d3.scaleOrdinal(d3.schemeCategory10);
         let colorScale = d3.scaleLinear()
-            .range(["red","yellow","navy"])
-            .domain([1,averageRating,5]);
+            .range(["red","yellow","blue"])
+            .domain([1,3.82,5]);
 
 
         let [categoryNames, categoryValues] = sortByCategories(restaurants);
@@ -294,21 +282,6 @@
             .attr("font-size",30)
 
 
-        container.append("g")
-            .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-400})`)
-            .append("rect")
-            .attr("x1",0)
-            .attr("y1",0)
-            .attr("width",25)
-            .attr("height",250)
-            .attr("fill","url(#Gradient2")
-
-            .attr("transform", d=>`rotate(-90)`);
-
-
-
-      
-
 
 
         container.append("g")
@@ -324,8 +297,9 @@
             .attr("stroke",(d,index) => {
 
 
-                return "#ccc"
-            });
+                return "#919191"
+            })
+            .attr("stroke-width",1);
 
 
         container.append("g")
@@ -341,9 +315,9 @@
             .attr("stroke",(d, index)=>{
 
 
-                return "#ccc"
+                return "#919191"
             })
-            .attr("stroke-width",2)
+            .attr("stroke-width",1)
 
 
 
@@ -391,6 +365,7 @@
             .attr("transform", `translate(${MARGIN.left-100}, ${MARGIN.top})`)
             .append("text")
             .text("Restaurant Names")
+            .attr("font-size",18)
             .attr("transform","rotate(-90)")
 
 
@@ -483,8 +458,6 @@
 
             })
 
-        let plotThis = reformatData2(restaurants)[0]
-        console.log("Plotting", plotThis)
 
         let radiusScale = d3.scaleLinear()
             .domain([1,3.82,5])
@@ -494,7 +467,7 @@
         container.append("g")
             .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
             .selectAll("circle")
-            .data(plotThis)
+            .data(reformattedRestaurants)
             .enter()
             .append("circle")
             .attr("cx", (d) => {
@@ -515,6 +488,8 @@
 
                 return colorScale(d[QUARTER_RATING_INDEX])
             });
+
+
 
         container.append("g")
             .attr("transform", `translate(${WIDTH/2+600}, ${MARGIN.top-450})`)
@@ -579,25 +554,41 @@
 
             .attr("fill","blue");
 
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 870}, ${MARGIN.top-420})`)
+            .append("text")
+            .text("Negative")
+            .attr("font-size",13)
+            .attr("fill","red")
+
+        container.append("g")
+            .attr("transform", `translate(${WIDTH/2 + 1000}, ${MARGIN.top-410})`)
+            .append("text")
+            .text("Positive")
+            .attr("font-size",13)
+            .attr("fill","blue")
 
 
-
-
+        let reliability = unreliableData(restaurants).reverse();
+        for(let value of reliability)
+        {
+            console.log(value);
+            value = Math.floor(value);
+        }
         let opacityScale = d3.scaleLinear()
             .domain([1,40])
             .range([0.6,0])
 
 
 
-
         container.append("g")
             .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
             .selectAll("rect")
-            .data(plotThis)
+            .data(reformattedRestaurants)
             .enter()
             .append("rect")
             .attr("x", (d) => {
-                return xScale(d[BUSINESS_NAME_INDEX]);
+                    return xScale(d[BUSINESS_NAME_INDEX]);
             })
             .attr("y",(d)=>{
                 return yScale(d[YEAR_QUARTER_INDEX]);
@@ -612,9 +603,8 @@
             })
             .attr("fill-opacity",(d) => {
 
-                return opacityScale(d[3])
+                return opacityScale(d[COUNT_INDEX])
             });
-
 
 
         container.append("g")
@@ -644,29 +634,6 @@
 
 
 
-//        let plotThis = reformatData2(restaurants)[0]
-//        console.log("Plotting", plotThis)
-//        container.append("g")
-//            .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
-//            .selectAll("rect")
-//            .data(plotThis)
-//            .enter()
-//            .append("rect")
-//            .attr("x", (d) => {
-//                return xScale(d[BUSINESS_NAME_INDEX]);
-//            })
-//            .attr("y",(d)=>{
-//                return yScale(d[YEAR_QUARTER_INDEX]);
-//            })
-//            .attr("width", d=>xScale.bandwidth())
-//            .attr("height", d=>yScale.bandwidth())
-//            .attr("fill",d=>{
-//
-//                return colorScale(d[QUARTER_RATING_INDEX])
-//            });
-
-
-
     }
 
 
@@ -676,7 +643,8 @@
     {
         d3.json("restaurants.json", (err,restaurants) => {
 
-
+            console.log(restaurants)
+            unreliableData(restaurants)
             drawChart("#chart",restaurants)
             //restaurantAndCategories(restaurants);
 

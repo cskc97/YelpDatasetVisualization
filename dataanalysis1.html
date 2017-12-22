@@ -144,6 +144,8 @@
 
                     addArray.push(quarterArray[counterTwo].rating);
 
+                    addArray.push(quarterArray[counterTwo]["count"]);
+
                     returnArray.push(addArray);
 
                     sumRating += +quarterArray[counterTwo].rating;
@@ -609,6 +611,40 @@
             .text("Positive")
             .attr("font-size",13)
             .attr("fill","blue")
+
+
+        let opacityScale = d3.scaleLinear()
+            .domain([1,40])
+            .range([0.6,0])
+
+
+
+
+        container.append("g")
+            .attr("transform",`translate(${MARGIN.left},${MARGIN.top})`)
+            .selectAll("rect")
+            .data(plotThis)
+            .enter()
+            .append("rect")
+            .attr("x", (d) => {
+                return xScale(d[BUSINESS_NAME_INDEX]);
+            })
+            .attr("y",(d)=>{
+                return yScale(d[YEAR_QUARTER_INDEX]);
+            })
+            .attr("width", d=>xScale.bandwidth())
+            .attr("height", d=>yScale.bandwidth())
+            .attr("fill",(d)=>{
+
+                return "#bababa"
+
+
+            })
+            .attr("fill-opacity",(d) => {
+
+                return opacityScale(d[3])
+            });
+
 
 
 
